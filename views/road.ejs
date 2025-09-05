@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - Road</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .roadcards-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            max-width: 1200px;
+        }
+        
+        .roadcard {
+            background-color: #6f3737;
+            border: 1px solid #BA9E9E;
+            padding: 25px;
+            min-height: 50px;
+            width: 250px;
+            height: 300px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .roadcard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+        
+        .roadcard-content {
+            font-size: 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #DA7E7E;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .roadcard h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .roadcard p {
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+        
+        .roadcard-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: auto;
+            display: block;
+            text-align: center;
+           
+        }
+        
+        
+      
+    
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="main-content">
+        <div class="hero-section">
+            <h1 class="welcome-title">SİBER GÜVENLİK YOL HARİTASI</h1>
+            <p class="welcome-description">
+                Aşağıdaki adımları takip ederek siber güvenlikte temel ve ileri düzey bilgilere ulaşabilirsin.
+                Her adımda yeni bir modül ve pratik uygulama seni bekliyor!
+            </p>
+        </div>
+
+        <div class="roadcards-container">
+            <div class="roadcard">
+                <div class="roadcard-content">
+                    <h3>Temel Kavramlar</h3>
+                    <p>Siber güvenliğin temelleri, kavramlar ve temel saldırı türleri. Ağ güvenliği, şifreleme ve güvenlik protokolleri hakkında temel bilgiler.</p>
+                    <a href="/main" class="roadcard-link">Devam Et</a>
+                </div>
+            </div>
+
+            <div class="roadcard">
+                <div class="roadcard-content">
+                    <h3>Web Güvenliği</h3>
+                    <p>Web uygulamalarındaki güvenlik açıkları, SQL injection, XSS saldırıları ve web güvenliği testleri. OWASP Top 10 ve güvenli kodlama.</p>
+                    <a href="/webSecurty" class="roadcard-link">Devam Et</a>
+                </div>
+            </div>
+
+            <div class="roadcard">
+                <div class="roadcard-content">
+                    <h3>Penetrasyon Testi</h3>
+                    <p>Etik hacking, penetrasyon testi metodolojileri, araçlar ve teknikler. Kali Linux, Metasploit ve diğer güvenlik araçları.</p>
+                    <a href="#" class="roadcard-link">Devam Et</a>
+                </div>
+            </div>
+
+            <div class="roadcard">
+                <div class="roadcard-content">
+                    <h3>İleri Seviye</h3>
+                    <p>Gelişmiş saldırı teknikleri, sosyal mühendislik, APT saldırıları ve güvenlik operasyonları. Sertifika programları ve kariyer yolları.</p>
+                    <a href="#" class="roadcard-link">Devam Et</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        
+</body>
+</html>

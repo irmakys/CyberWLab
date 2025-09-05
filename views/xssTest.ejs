@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - XSS Test</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .xss-test-container {
+            max-width: 1200px;
+            margin: 80px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .xss-test-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .xss-test-title {
+            font-size: 2.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .xss-test-description {
+            font-size: 1.3rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #DA7E7E;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: #6A1E27;
+            border: 1px solid #BA9E9E;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #DA7E7E;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+            color: #DA7E7E;
+        }
+
+        .xss-demo-container {
+            background-color: #1e0b0dbc;
+            border: 2px solid #BA9E9E;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .xss-input {
+            width: 100%;
+            max-width: 500px;
+            height: 40px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #BA9E9E;
+            font-size: 16px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .xss-button {
+            background: #1B2523;
+            color: #fff;
+            border: 3px solid #D90D1E;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #A62C21, 0 0 20px #A62C21 inset;
+            margin: 10px;
+        }
+
+        .xss-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px #A62C21, 0 0 25px #A62C21 inset;
+        }
+
+        .xss-output {
+            background-color: #ffffff;
+            border: 2px solid #DA7E7E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 100px;
+            text-align: left;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .warning-box {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 2px solid #F44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #F44336;
+            font-weight: 600;
+        }
+
+                            .next-stage-button {
+                        display: block;
+                        margin: 40px auto;
+                        padding: 18px 45px;
+                        background: linear-gradient(135deg, #5E1A23 0%, #973d49 100%);
+                        color: #ffffff;
+                        text-decoration: none;
+                        border-radius: 15px;
+                        font-family: 'Inter', sans-serif;
+                        font-weight: 700;
+                        font-size: 1.3rem;
+                        text-align: center;
+                        transition: all 0.4s ease;
+                        box-shadow: 0 8px 25px rgba(94, 26, 35, 0.4), 0 0 20px rgba(94, 26, 35, 0.2);
+                        border: 3px solid #ffffff;
+                        width: 250px;
+                        position: relative;
+                        overflow: hidden;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                    }
+
+                    .next-stage-button::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                        transition: left 0.5s;
+                    }
+
+                    .next-stage-button:hover::before {
+                        left: 100%;
+                    }
+
+                    .next-stage-button:hover {
+                        transform: translateY(-5px) scale(1.05);
+                        box-shadow: 0 15px 35px rgba(94, 26, 35, 0.5), 0 0 30px rgba(94, 26, 35, 0.3);
+                        background: linear-gradient(135deg, #973d49 0%, #5E1A23 100%);
+                        border-color: #DA7E7E;
+                    }
+
+                    @media (max-width: 768px) {
+                        .xss-test-title {
+                            font-size: 2.2rem;
+                        }
+
+                        .xss-test-description {
+                            font-size: 1.1rem;
+                        }
+
+                        .section-title {
+                            font-size: 1.5rem;
+                        }
+
+                        .section-content {
+                            font-size: 1rem;
+                        }
+
+                        .content-section {
+                            padding: 25px;
+                        }
+
+                        .xss-demo-container {
+                            padding: 25px;
+                        }
+
+                        .next-stage-button {
+                            width: 200px;
+                            padding: 15px 35px;
+                            font-size: 1.1rem;
+                        }
+                    }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="xss-test-container">
+        <div class="xss-test-header">
+            <h1 class="xss-test-title">Cross-Site Scripting (XSS) Testi</h1>
+            <p class="xss-test-description">
+                XSS saldırılarını öğren ve test et. Web uygulamalarında script enjeksiyonu 
+                tekniklerini keşfet ve korunma yöntemlerini öğren.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">XSS Nedir?</h2>
+            <div class="section-content">
+                <p>
+                    Cross-Site Scripting (XSS), saldırganların web sayfalarına zararlı JavaScript kodları 
+                    enjekte etmesine olanak sağlayan bir güvenlik açığıdır. Bu saldırı türü, kullanıcıların 
+                    tarayıcılarında istenmeyen kodların çalışmasına neden olabilir.
+                </p>
+                <p>
+                    XSS saldırıları genellikle kullanıcı girdilerinin (form verileri, URL parametreleri, 
+                    cookie'ler) yeterince doğrulanmaması ve temizlenmemesi sonucunda ortaya çıkar.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">XSS Türleri</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Reflected XSS:</strong> Kullanıcı girdisi sunucudan geri yansıtılır</li>
+                    <li><strong>Stored XSS:</strong> Zararlı kod veritabanında saklanır</li>
+                    <li><strong>DOM-based XSS:</strong> Client-side JavaScript ile DOM manipülasyonu</li>
+                    <li><strong>Blind XSS:</strong> Görünmeyen ama çalışan XSS kodları</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="xss-demo-container">
+            <h2 class="section-title">XSS Demo Paneli</h2>
+            <p class="section-content">
+                Aşağıdaki input alanına XSS payload'ları deneyebilirsin. 
+                <strong>⚠️ Bu sadece eğitim amaçlıdır, gerçek sistemlerde kullanmayın!</strong>
+            </p>
+            
+            <input type="text" 
+                   class="xss-input" 
+                   id="xssInput" 
+                   placeholder="XSS payload'ı buraya yazın (örn: <script>alert('XSS')</script>)">
+            
+            <br>
+            <button class="xss-button" onclick="testXSS()">Test Et</button>
+            <button class="xss-button" onclick="clearOutput()">Temizle</button>
+            
+            <div class="warning-box">
+                <strong>⚠️ Güvenlik Uyarısı:</strong> Bu demo sadece eğitim amaçlıdır. 
+                Gerçek sistemlerde XSS testleri yapmayın!
+            </div>
+            
+            <h3 style="color: #DA7E7E; margin-top: 30px;">Çıktı:</h3>
+            <div class="xss-output" id="xssOutput">
+                XSS payload'ını test etmek için yukarıdaki input alanını kullanın...
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Korunma Yöntemleri</h2>
+            <div class="section-content">
+                <p>
+                    XSS saldırılarına karşı korunmak için aşağıdaki yöntemleri uygulayın:
+                </p>
+                <ul>
+                    <li><strong>Input Validation:</strong> Tüm kullanıcı girdilerini doğrulayın</li>
+                    <li><strong>Output Encoding:</strong> Çıktıları HTML encode edin</li>
+                    <li><strong>Content Security Policy (CSP):</strong> Script çalıştırma kısıtlamaları</li>
+                    <li><strong>HttpOnly Cookies:</strong> JavaScript erişimini engelleyin</li>
+                    <li><strong>Regular Security Testing:</strong> Düzenli güvenlik testleri yapın</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Test Payload'ları</h2>
+            <div class="section-content">
+                <p>
+                    XSS testlerinde kullanabileceğiniz bazı payload örnekleri:
+                </p>
+                <ul>
+                    <li><code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></li>
+                    <li><code>&lt;img src="x" onerror="alert('XSS')"&gt;</code></li>
+                    <li><code>&lt;svg onload="alert('XSS')"&gt;&lt;/svg&gt;</code></li>
+                    <li><code>javascript:alert('XSS')</code></li>
+                    <li><code>&lt;iframe src="javascript:alert('XSS')"&gt;&lt;/iframe&gt;</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Devam Et Butonu -->
+        <div style="text-align: center; margin: 50px 0;">
+            <a href="/sqlInjection" class="next-stage-button">Devam Et</a>
+        </div>
+    </div>
+
+    <script>
+        function testXSS() {
+            const input = document.getElementById('xssInput').value;
+            const output = document.getElementById('xssOutput');
+            
+            if (input.trim() === '') {
+                output.innerHTML = '<p style="color: #F44336;">Lütfen bir XSS payload\'ı girin!</p>';
+                return;
+            }
+            
+            // Güvenlik için sadece demo amaçlı
+            output.innerHTML = `
+                <h4>Girilen Payload:</h4>
+                <p style="background: #f5f5f5; padding: 10px; border-radius: 5px; font-family: monospace;">
+                    ${escapeHtml(input)}
+                </p>
+                <hr>
+                <h4>HTML Çıktısı (Güvenli):</h4>
+                <div style="background: #e8f5e8; padding: 10px; border-radius: 5px; border-left: 4px solid #4CAF50;">
+                    ${escapeHtml(input)}
+                </div>
+                <hr>
+                <h4>⚠️ Uyarı:</h4>
+                <p style="color: #F44336;">Bu payload gerçek bir sistemde çalıştırılsaydı XSS saldırısı gerçekleşebilirdi!</p>
+            `;
+        }
+
+        function clearOutput() {
+            document.getElementById('xssOutput').innerHTML = 'XSS payload\'ını test etmek için yukarıdaki input alanını kullanın...';
+            document.getElementById('xssInput').value = '';
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+</body>
+</html>

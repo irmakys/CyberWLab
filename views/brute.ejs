@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - Brute Force Testi</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .brute-container {
+            max-width: 1200px;
+            margin: 80px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .brute-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .brute-title {
+            font-size: 2.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .brute-description {
+            font-size: 1.3rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #DA7E7E;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: #6A1E27;
+            border: 1px solid #BA9E9E;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #DA7E7E;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+            color: #DA7E7E;
+        }
+
+        .admin-panel {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border: 3px solid #ff6b6b;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            color: #ff6b6b;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-form {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            max-width: 300px;
+            height: 45px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid #ff6b6b;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            background-color: #ffffff;
+        }
+
+        .brute-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            margin: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .brute-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(45deg, #ee5a52, #ff6b6b);
+        }
+
+        .brute-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .attack-log {
+            background-color: #000000;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+
+        .log-success {
+            color: #00ff00;
+        }
+
+        .log-failed {
+            color: #ff6b6b;
+        }
+
+        .log-info {
+            color: #ffff00;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid #ff6b6b;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progress-shine 2s infinite;
+        }
+
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background-color: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            min-width: 120px;
+            margin: 5px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #ffffff;
+            margin-top: 5px;
+        }
+
+        .warning-box {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 2px solid #F44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #F44336;
+            font-weight: 600;
+        }
+
+        .success-box {
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .password-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .password-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            color: #ffffff;
+            font-family: monospace;
+            transition: all 0.3s ease;
+        }
+
+        .password-item.tried {
+            background-color: rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+        }
+
+        .password-item.success {
+            background-color: rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+            color: #4CAF50;
+        }
+
+        @media (max-width: 768px) {
+            .brute-title {
+                font-size: 2.2rem;
+            }
+
+            .brute-description {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-content {
+                font-size: 1rem;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+
+            .admin-panel {
+                padding: 25px;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .next-stage-button {
+                        display: block;
+                        margin: 40px auto;
+                        padding: 18px 45px;
+                        background: linear-gradient(135deg, #5E1A23 0%, #973d49 100%);
+                        color: #ffffff;
+                        text-decoration: none;
+                        border-radius: 15px;
+                        font-family: 'Inter', sans-serif;
+                        font-weight: 700;
+                        font-size: 1.3rem;
+                        text-align: center;
+                        transition: all 0.4s ease;
+                        box-shadow: 0 8px 25px rgba(94, 26, 35, 0.4), 0 0 20px rgba(94, 26, 35, 0.2);
+                        border: 3px solid #ffffff;
+                        width: 250px;
+                        position: relative;
+                        overflow: hidden;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                    }
+
+                    .next-stage-button::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                        transition: left 0.5s;
+                    }
+
+                    .next-stage-button:hover::before {
+                        left: 100%;
+                    }
+
+                    .next-stage-button:hover {
+                        transform: translateY(-5px) scale(1.05);
+                        box-shadow: 0 15px 35px rgba(94, 26, 35, 0.5), 0 0 30px rgba(94, 26, 35, 0.3);
+                        background: linear-gradient(135deg, #973d49 0%, #5E1A23 100%);
+                        border-color: #DA7E7E;
+                    }
+
+                    @media (max-width: 768px) {
+                        .xss-test-title {
+                            font-size: 2.2rem;
+                        }
+
+                        .xss-test-description {
+                            font-size: 1.1rem;
+                        }
+
+                        .section-title {
+                            font-size: 1.5rem;
+                        }
+
+                        .section-content {
+                            font-size: 1rem;
+                        }
+
+                        .content-section {
+                            padding: 25px;
+                        }
+
+                        .xss-demo-container {
+                            padding: 25px;
+                        }
+
+                        .next-stage-button {
+                            width: 200px;
+                            padding: 15px 35px;
+                            font-size: 1.1rem;
+                        }
+                    }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="brute-container">
+        <div class="brute-header">
+            <h1 class="brute-title">Brute Force Testi</h1>
+            <p class="brute-description">
+                Siber Güvenlik Laboratuvarı'nın admin paneline brute force saldırısı düzenle. 
+                Farklı şifre kombinasyonları deneyerek güvenlik açığını keşfet!
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🎯 Senaryo: Admin Panel Erişimi</h2>
+            <div class="section-content">
+                <p>
+                    Siber Güvenlik Laboratuvarı'nın admin paneline erişim sağlamaya çalışıyorsun. 
+                    Bilinen kullanıcı adı: <strong style="color: #ff6b6b;">admin</strong>
+                </p>
+                <p>
+                    Görevin: Farklı şifre kombinasyonları deneyerek doğru şifreyi bulmak. 
+                    Sistem otomatik olarak yaygın şifreleri deneyecek.
+                </p>
+            </div>
+        </div>
+
+        <!-- Admin Panel Simülasyonu -->
+        <div class="admin-panel">
+            <h2 class="admin-title">🔐 Admin Panel Girişi</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label class="form-label">Kullanıcı Adı:</label>
+                    <input type="text" class="form-input" id="username" value="admin" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Şifre:</label>
+                    <input type="password" class="form-input" id="password" placeholder="Şifre denenecek...">
+                </div>
+                <button class="brute-button" onclick="startBruteForce()" id="startBtn">
+                    🚀 Brute Force Saldırısını Başlat
+                </button>
+                <button class="brute-button" onclick="stopBruteForce()" id="stopBtn" style="display: none;">
+                    ⏹️ Saldırıyı Durdur
+                </button>
+                <button class="brute-button" onclick="resetAttack()" id="resetBtn">
+                    🔄 Sıfırla
+                </button>
+            </div>
+
+            <!-- İstatistikler -->
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="attemptsCount">0</div>
+                    <div class="stat-label">Deneme</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="successCount">0</div>
+                    <div class="stat-label">Başarılı</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="failedCount">0</div>
+                    <div class="stat-label">Başarısız</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="timeElapsed">0s</div>
+                    <div class="stat-label">Geçen Süre</div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <!-- Saldırı Logu -->
+            <h3 style="color: #ff6b6b; margin-top: 20px;">📊 Saldırı Logu:</h3>
+            <div class="attack-log" id="attackLog">
+                <div class="log-entry log-info">[INFO] Brute force saldırısı hazır...</div>
+                <div class="log-entry log-info">[INFO] Hedef: admin paneli</div>
+                <div class="log-entry log-info">[INFO] Saldırıyı başlatmak için butona tıklayın</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔍 Test Edilecek Şifreler</h2>
+            <div class="section-content">
+                <p>
+                    Sistem aşağıdaki yaygın şifreleri otomatik olarak deneyecek:
+                </p>
+                <div class="password-list" id="passwordList">
+                    <!-- JavaScript ile dinamik olarak doldurulacak -->
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🛡️ Brute Force Korunma Yöntemleri</h2>
+            <div class="section-content">
+                <p>
+                    Brute force saldırılarına karşı korunmak için:
+                </p>
+                <ul>
+                    <li><strong>Rate Limiting:</strong> Belirli sürede maksimum deneme sayısı</li>
+                    <li><strong>Account Lockout:</strong> Çok fazla başarısız deneme sonrası hesap kilitleme</li>
+                    <li><strong>CAPTCHA:</strong> Otomatik saldırıları engelleme</li>
+                    <li><strong>Strong Passwords:</strong> Güçlü şifre politikaları</li>
+                    <li><strong>Two-Factor Authentication:</strong> İki faktörlü kimlik doğrulama</li>
+                    <li><strong>IP Blocking:</strong> Şüpheli IP adreslerini engelleme</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">⚠️ Güvenlik Uyarısı</h2>
+            <div class="warning-box">
+                <strong>🚨 ÖNEMLİ:</strong> Bu platform yalnızca eğitim amaçlıdır. Burada öğrenilen yöntemlerin başka sistemlerde kullanılması hukuka aykırıdır ve cezai sorumluluk doğurur. Platform üzerinde yapılan tüm işlemler eğitim ortamıyla sınırlıdır
+            </div>
+        </div>
+
+        <!-- Devam Et Butonu -->
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="/upload" class="next-stage-button">File Upload Testine Geç
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Test edilecek şifreler listesi
+        const passwords = [
+            'admin', 'password', '123456', 'admin123', 'password123',
+            'qwerty', 'letmein', 'welcome', 'monkey', 'dragon',
+            'master', 'hello', 'freedom', 'whatever', 'qazwsx',
+            'trustno1', 'dragon', 'batterystaple', 'correcthorse',
+            'cyberwlab2024', 'security123', 'admin2024', 'password1',
+            '123456789', 'iloveyou', 'princess', 'rockyou', '1234567890'
+        ];
+
+        // Doğru şifre (rastgele seçilecek)
+        const correctPassword = passwords[Math.floor(Math.random() * passwords.length)];
+
+        let isAttacking = false;
+        let currentIndex = 0;
+        let attempts = 0;
+        let successCount = 0;
+        let failedCount = 0;
+        let startTime = null;
+        let attackInterval = null;
+
+        // Sayfa yüklendiğinde şifre listesini göster
+        document.addEventListener('DOMContentLoaded', function() {
+            displayPasswordList();
+            logMessage('[INFO] Doğru şifre: ' + correctPassword, 'info');
+        });
+
+        function displayPasswordList() {
+            const passwordList = document.getElementById('passwordList');
+            passwordList.innerHTML = '';
+            
+            passwords.forEach((password, index) => {
+                const passwordItem = document.createElement('div');
+                passwordItem.className = 'password-item';
+                passwordItem.id = 'password-' + index;
+                passwordItem.textContent = password;
+                passwordList.appendChild(passwordItem);
+            });
+        }
+
+        function startBruteForce() {
+            if (isAttacking) return;
+            
+            isAttacking = true;
+            startTime = Date.now();
+            currentIndex = 0;
+            attempts = 0;
+            successCount = 0;
+            failedCount = 0;
+            
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('stopBtn').style.display = 'inline-block';
+            
+            logMessage('[INFO] Brute force saldırısı başlatıldı...', 'info');
+            logMessage('[INFO] Hedef: admin paneli', 'info');
+            
+            attackInterval = setInterval(attemptLogin, 500); // Her 500ms'de bir deneme
+        }
+
+        function stopBruteForce() {
+            if (!isAttacking) return;
+            
+            isAttacking = false;
+            clearInterval(attackInterval);
+            
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('stopBtn').style.display = 'none';
+            
+            logMessage('[INFO] Saldırı durduruldu.', 'info');
+        }
+
+        function resetAttack() {
+            stopBruteForce();
+            
+            attempts = 0;
+            successCount = 0;
+            failedCount = 0;
+            currentIndex = 0;
+            
+            updateStats();
+            updateProgress();
+            
+            // Şifre listesini sıfırla
+            passwords.forEach((password, index) => {
+                const element = document.getElementById('password-' + index);
+                element.className = 'password-item';
+            });
+            
+            // Log'u temizle
+            document.getElementById('attackLog').innerHTML = `
+                <div class="log-entry log-info">[INFO] Brute force saldırısı hazır...</div>
+                <div class="log-entry log-info">[INFO] Hedef: admin paneli</div>
+                <div class="log-entry log-info">[INFO] Saldırıyı başlatmak için butona tıklayın</div>
+            `;
+            
+            document.getElementById('password').value = '';
+        }
+
+        function attemptLogin() {
+            if (!isAttacking || currentIndex >= passwords.length) {
+                if (currentIndex >= passwords.length) {
+                    logMessage('[WARNING] Tüm şifreler denendi, saldırı başarısız!', 'failed');
+                    stopBruteForce();
+                }
+                return;
+            }
+            
+            const currentPassword = passwords[currentIndex];
+            attempts++;
+            
+            // Şifre alanını güncelle
+            document.getElementById('password').value = currentPassword;
+            
+            // Şifre listesinde işaretle
+            const passwordElement = document.getElementById('password-' + currentIndex);
+            passwordElement.className = 'password-item tried';
+            
+            // Şifre kontrolü
+            if (currentPassword === correctPassword) {
+                successCount++;
+                passwordElement.className = 'password-item success';
+                
+                logMessage(`[SUCCESS] Şifre bulundu: ${currentPassword}`, 'success');
+                logMessage('[SUCCESS] Admin paneline erişim sağlandı!', 'success');
+                logMessage('[SUCCESS] Brute force saldırısı başarılı!', 'success');
+                
+                stopBruteForce();
+                
+                // Başarı mesajı göster
+                setTimeout(() => {
+                    alert('🎉 Tebrikler! Brute force saldırısı başarılı!\n\nDoğru şifre: ' + correctPassword + '\n\nBu gerçek bir sistemde ciddi bir güvenlik açığı olurdu!');
+                }, 1000);
+                
+            } else {
+                failedCount++;
+                logMessage(`[FAILED] Deneme ${attempts}: ${currentPassword} - Başarısız`, 'failed');
+            }
+            
+            currentIndex++;
+            updateStats();
+            updateProgress();
+        }
+
+        function updateStats() {
+            document.getElementById('attemptsCount').textContent = attempts;
+            document.getElementById('successCount').textContent = successCount;
+            document.getElementById('failedCount').textContent = failedCount;
+            
+            if (startTime) {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById('timeElapsed').textContent = elapsed + 's';
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentIndex / passwords.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function logMessage(message, type) {
+            const log = document.getElementById('attackLog');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry log-' + type;
+            logEntry.textContent = message;
+            log.appendChild(logEntry);
+            
+            // Log'u en alta kaydır
+            log.scrollTop = log.scrollHeight;
+        }
+    </script>
+</body>
+</html>

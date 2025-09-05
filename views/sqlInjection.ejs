@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - SQL Injection</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .sql-injection-container {
+            max-width: 1200px;
+            margin: 80px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .sql-injection-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .sql-injection-title {
+            font-size: 2.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sql-injection-description {
+            font-size: 1.3rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #DA7E7E;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: #6A1E27;
+            border: 1px solid #BA9E9E;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #DA7E7E;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+            color: #DA7E7E;
+        }
+
+        .sql-demo-container {
+            background-color: #1e0b0dbc;
+            border: 2px solid #BA9E9E;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .sql-input {
+            width: 100%;
+            max-width: 500px;
+            height: 40px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #BA9E9E;
+            font-size: 16px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .sql-button {
+            background: #1B2523;
+            color: #fff;
+            border: 3px solid #D90D1E;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #A62C21, 0 0 20px #A62C21 inset;
+            margin: 10px;
+        }
+
+        .sql-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px #A62C21, 0 0 25px #A62C21 inset;
+        }
+
+        .sql-output {
+            background-color: #ffffff;
+            border: 2px solid #DA7E7E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 100px;
+            text-align: left;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .warning-box {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 2px solid #F44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #F44336;
+            font-weight: 600;
+        }
+        .next-stage-button {
+                        display: block;
+                        margin: 40px auto;
+                        padding: 18px 45px;
+                        background: linear-gradient(135deg, #5E1A23 0%, #973d49 100%);
+                        color: #ffffff;
+                        text-decoration: none;
+                        border-radius: 15px;
+                        font-family: 'Inter', sans-serif;
+                        font-weight: 700;
+                        font-size: 1.3rem;
+                        text-align: center;
+                        transition: all 0.4s ease;
+                        box-shadow: 0 8px 25px rgba(94, 26, 35, 0.4), 0 0 20px rgba(94, 26, 35, 0.2);
+                        border: 3px solid #ffffff;
+                        width: 250px;
+                        position: relative;
+                        overflow: hidden;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                    }
+
+                    .next-stage-button::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                        transition: left 0.5s;
+                    }
+
+                    .next-stage-button:hover::before {
+                        left: 100%;
+                    }
+
+                    .next-stage-button:hover {
+                        transform: translateY(-5px) scale(1.05);
+                        box-shadow: 0 15px 35px rgba(94, 26, 35, 0.5), 0 0 30px rgba(94, 26, 35, 0.3);
+                        background: linear-gradient(135deg, #973d49 0%, #5E1A23 100%);
+                        border-color: #DA7E7E;
+                    }
+
+                    @media (max-width: 768px) {
+                        .xss-test-title {
+                            font-size: 2.2rem;
+                        }
+
+                        .xss-test-description {
+                            font-size: 1.1rem;
+                        }
+
+                        .section-title {
+                            font-size: 1.5rem;
+                        }
+
+                        .section-content {
+                            font-size: 1rem;
+                        }
+
+                        .content-section {
+                            padding: 25px;
+                        }
+
+                        .xss-demo-container {
+                            padding: 25px;
+                        }
+
+                        .next-stage-button {
+                            width: 200px;
+                            padding: 15px 35px;
+                            font-size: 1.1rem;
+                        }
+                    }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="sql-injection-container">
+        <div class="sql-injection-header">
+            <h1 class="sql-injection-title">SQL Injection Testi</h1>
+            <p class="sql-injection-description">
+                SQL Injection saldırılarını öğren ve test et. Veritabanı güvenlik açıklarını 
+                keşfet ve korunma yöntemlerini öğren.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">SQL Injection Nedir?</h2>
+            <div class="section-content">
+                <p>
+                    SQL Injection, saldırganların web uygulamalarının veritabanı sorgularına 
+                    zararlı SQL kodları enjekte etmesine olanak sağlayan bir güvenlik açığıdır.
+                </p>
+                <p>
+                    Bu saldırı türü, kullanıcı girdilerinin yeterince doğrulanmaması ve 
+                    temizlenmemesi sonucunda ortaya çıkar.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">SQL Injection Türleri</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Union-based SQL Injection:</strong> UNION operatörü ile veri çekme</li>
+                    <li><strong>Boolean-based SQL Injection:</strong> True/False yanıtları ile veri çıkarma</li>
+                    <li><strong>Time-based SQL Injection:</strong> Zaman gecikmesi ile veri çıkarma</li>
+                    <li><strong>Error-based SQL Injection:</strong> Hata mesajlarından veri çıkarma</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sql-demo-container">
+            <h2 class="section-title">SQL Injection Demo Paneli</h2>
+            <p class="section-content">
+                Aşağıdaki input alanına SQL injection payload'ları deneyebilirsin. 
+                <strong>⚠️ Bu sadece eğitim amaçlıdır, gerçek sistemlerde kullanmayın!</strong>
+            </p>
+            
+            <input type="text" 
+                   class="sql-input" 
+                   id="sqlInput" 
+                   placeholder="SQL injection payload'ı buraya yazın (örn: ' OR '1'='1)">
+            
+            <br>
+            <button class="sql-button" onclick="testSQL()">Test Et</button>
+            <button class="sql-button" onclick="clearSQLOutput()">Temizle</button>
+            
+            <div class="warning-box">
+                <strong>⚠️ Güvenlik Uyarısı:</strong> Bu demo sadece eğitim amaçlıdır. 
+                Gerçek sistemlerde SQL injection testleri yapmayın!
+            </div>
+            
+            <h3 style="color: #DA7E7E; margin-top: 30px;">Çıktı:</h3>
+            <div class="sql-output" id="sqlOutput">
+                SQL injection payload'ını test etmek için yukarıdaki input alanını kullanın...
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Korunma Yöntemleri</h2>
+            <div class="section-content">
+                <p>
+                    SQL Injection saldırılarına karşı korunmak için aşağıdaki yöntemleri uygulayın:
+                </p>
+                <ul>
+                    <li><strong>Prepared Statements:</strong> Parametreli sorgular kullanın</li>
+                    <li><strong>Input Validation:</strong> Tüm kullanıcı girdilerini doğrulayın</li>
+                    <li><strong>Escape Special Characters:</strong> Özel karakterleri escape edin</li>
+                    <li><strong>Least Privilege:</strong> Minimum yetki prensibi uygulayın</li>
+                    <li><strong>Regular Security Testing:</strong> Düzenli güvenlik testleri yapın</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Test Payload'ları</h2>
+            <div class="section-content">
+                <p>
+                    SQL injection testlerinde kullanabileceğiniz bazı payload örnekleri:
+                </p>
+                <ul>
+                    <li><code>' OR '1'='1</code></li>
+                    <li><code>' UNION SELECT 1,2,3--</code></li>
+                    <li><code>' AND 1=1--</code></li>
+                    <li><code>' AND SLEEP(5)--</code></li>
+                    <li><code>' AND (SELECT COUNT(*) FROM users)>0--</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Devam Et Butonu -->
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="/idor" class="next-stage-button" >
+                IDOR Testine Geç
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function testSQL() {
+            const input = document.getElementById('sqlInput').value;
+            const output = document.getElementById('sqlOutput');
+            
+            if (input.trim() === '') {
+                output.innerHTML = '<p style="color: #F44336;">Lütfen bir SQL injection payload\'ı girin!</p>';
+                return;
+            }
+            
+            // Güvenlik için sadece demo amaçlı
+            output.innerHTML = `
+                <h4>Girilen Payload:</h4>
+                <p style="background: #f5f5f5; padding: 10px; border-radius: 5px; font-family: monospace;">
+                    ${escapeHtml(input)}
+                </p>
+                <hr>
+                <h4>SQL Sorgusu (Güvenli):</h4>
+                <div style="background: #e8f5e8; padding: 10px; border-radius: 5px; border-left: 4px solid #4CAF50;">
+                    SELECT * FROM users WHERE username = '${escapeHtml(input)}' AND password = '***'
+                </div>
+                <hr>
+                <h4>⚠️ Uyarı:</h4>
+                <p style="color: #F44336;">Bu payload gerçek bir sistemde çalıştırılsaydı SQL injection saldırısı gerçekleşebilirdi!</p>
+            `;
+        }
+
+        function clearSQLOutput() {
+            document.getElementById('sqlOutput').innerHTML = 'SQL injection payload\'ını test etmek için yukarıdaki input alanını kullanın...';
+            document.getElementById('sqlInput').value = '';
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+</body>
+</html>

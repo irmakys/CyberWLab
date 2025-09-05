@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - Test Sayfası</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 80px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .test-title {
+            font-size: 2.5rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .test-description {
+            font-size: 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #DA7E7E;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background-color: #6A1E27;
+            border: 1px solid #BA9E9E;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #DA7E7E;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(186, 158, 158, 0.1);
+            border: 2px solid #BA9E9E;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-item:hover {
+            background: rgba(218, 126, 126, 0.2);
+            border-color: #DA7E7E;
+            transform: translateX(5px);
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: #DA7E7E;
+        }
+
+        .option-item label {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #ffffff;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .result-message {
+            margin-top: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .result-correct {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .result-incorrect {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 2px solid #F44336;
+            color: #F44336;
+        }
+
+        .score-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(95, 49, 49, 0.6);
+            border-radius: 15px;
+            border: 2px solid #5B2B2C;
+        }
+
+        .score-text {
+            font-size: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #DA7E7E;
+        }
+
+        .check-button {
+            display: block;
+            margin: 40px auto;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, #DA7E7E 0%, #BA9E9E 50%, #DA7E7E 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(218, 126, 126, 0.4), 0 0 20px rgba(218, 126, 126, 0.2);
+            border: 3px solid #ffffff;
+            width: 250px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .check-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .check-button:hover::before {
+            left: 100%;
+        }
+
+        .check-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(218, 126, 126, 0.5), 0 0 30px rgba(218, 126, 126, 0.3);
+            background: linear-gradient(135deg, #BA9E9E 0%, #DA7E7E 50%, #BA9E9E 100%);
+            border-color: #DA7E7E;
+        }
+
+        .next-stage-button {
+            display: block;
+            margin: 40px auto;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, #5E1A23 0%, #973d49 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 15px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(94, 26, 35, 0.4), 0 0 20px rgba(94, 26, 35, 0.2);
+            border: 3px solid #ffffff;
+            width: 250px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .next-stage-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .next-stage-button:hover::before {
+            left: 100%;
+        }
+
+        .next-stage-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(94, 26, 35, 0.5), 0 0 30px rgba(94, 26, 35, 0.3);
+            background: linear-gradient(135deg, #973d49 0%, #5E1A23 100%);
+            border-color: #DA7E7E;
+        }
+
+        @media (max-width: 768px) {
+            .test-title {
+                font-size: 2rem;
+            }
+
+            .test-description {
+                font-size: 1rem;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            .check-button {
+                width: 200px;
+                padding: 15px 35px;
+                font-size: 1.1rem;
+            }
+
+            .next-stage-button {
+                width: 200px;
+                padding: 15px 35px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="test-container">
+        <div class="test-header">
+            <h1 class="test-title">Siber Güvenlik Testi</h1>
+            <p class="test-description">
+                Öğrendiğin kavramları test et ve bilgilerini pekiştir. 
+                Her soru için sadece bir cevap seç.
+            </p>
+        </div>
+
+        <% if (typeof score !== 'undefined' && showResults) { %>
+            <div class="score-display">
+                <div class="score-text">Test Sonucunuz:</div>
+                <div class="score-percentage"><%= score %>%</div>
+            </div>
+        <% } %>
+
+        <form method="POST" action="/test">
+            <% questions.forEach((question, index) => { %>
+                <div class="question-card">
+                    <div class="question-number">Soru <%= index + 1 %></div>
+                    <div class="question-text"><%= question.question %></div>
+                    
+                    <div class="options-container">
+                        <% question.options.forEach((option, optionIndex) => { %>
+                            <div class="option-item">
+                                <input type="radio" 
+                                       id="q<%= question.id %>_<%= optionIndex %>" 
+                                       name="answers[<%= question.id %>]" 
+                                       value="<%= optionIndex %>"
+                                       <% if (typeof results !== 'undefined' && results.find(r => r.questionId === question.id)?.userAnswer === optionIndex) { %>checked<% } %>>
+                                <label for="q<%= question.id %>_<%= optionIndex %>"><%= option %></label>
+                            </div>
+                        <% }); %>
+                    </div>
+
+                    <% if (typeof results !== 'undefined' && showResults) { %>
+                        <% const result = results.find(r => r.questionId === question.id); %>
+                        <% if (result) { %>
+                            <div class="result-message <%= result.isCorrect ? 'result-correct' : 'result-incorrect' %>">
+                                <% if (result.isCorrect) { %>
+                                    ✅ Doğru! Tebrikler!
+                                <% } else { %>
+                                    ❌ Yanlış! Doğru cevap: <%= question.options[result.correctAnswer] %>
+                                <% } %>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </div>
+            <% }); %>
+
+            <% if (typeof showResults !== 'undefined' && showResults) { %>
+                <a href="/road" class="next-stage-button">Sıradaki Aşamaya Geç</a>
+            <% } else { %>
+                <button type="submit" class="check-button">
+                    Kontrol Et
+                </button>
+            <% } %>
+        </form>
+    </div>
+</body>
+</html>

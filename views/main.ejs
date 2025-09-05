@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - Ana Sayfa</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <style>
+        .maincards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            max-width: 1000px;
+            margin: 80px auto 40px auto;
+            padding: 0 20px;
+        }
+        
+        .maincard {
+            background-color: #6A1E27;
+            border: 1px solid #BA9E9E;
+            padding: 15px;
+            width: calc(33.333% - 14px);
+            min-height: 160px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            flex: 0 0 calc(33.333% - 10px);
+            max-width: calc(33.333% - 10px);
+        }
+        
+        .maincard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+        
+        .maincard h3 {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        
+        .maincard p {
+            font-size: 1.0rem;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 300;
+            color: #DA7E7E;
+            line-height: 1.5;
+        }
+        
+        .test-button {
+            display: block;
+            margin: 50px auto 1000px auto;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #DA7E7E 0%, #BA9E9E 50%, #DA7E7E 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(218, 126, 126, 0.4), 0 0 20px rgba(218, 126, 126, 0.2);
+            border: 3px solid #ffffff;
+            width: 220px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .test-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .test-button:hover::before {
+            left: 100%;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(218, 126, 126, 0.5), 0 0 30px rgba(218, 126, 126, 0.3);
+            background: linear-gradient(135deg, #BA9E9E 0%, #DA7E7E 50%, #BA9E9E 100%);
+            border-color: #DA7E7E;
+        }
+        
+        @media (max-width: 768px) {
+            .maincards-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .maincard {
+                width: 90%;
+                max-width: 400px;
+            }
+            
+            .test-button {
+                margin: 30px auto;
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <div class="maincards-container">
+        <div class="maincard">
+            <h3>1-HTTP (HyperText Transfer Protocol)</h3>
+            <p>İstemci (tarayıcı) ile sunucu arasındaki iletişimi sağlar. Web trafiği bu protokol üzerinden yürür. Güvensizdir, şifreleme yoktur, HTTP üzerinden yapılan formlar saldırıya açıktır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>2-HTTPS (HTTP Secure)</h3>
+            <p>HTTP'nin SSL/TLS ile şifrelenmiş halidir. Veri iletimi güvenlidir. Kimlik avı (phishing), veri sızdırma, oturum çalma gibi riskleri azaltır.,üvenli oturum yönetimi için temel gereksinimdir.</p> </div>
+
+        <div class="maincard">
+            <h3>3-SSL/TLS (Secure Sockets Layer / Transport Layer Security)</h3>
+            <p>Verilerin uçtan uca şifreli şekilde aktarılmasını sağlar.Özellikle login, ödeme, dosya aktarımı gibi işlemlerde hassas bilgileri korur. HTTPS protokolünün temelidir.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>4-Cookie (Çerezler)</h3>
+            <p>Tarayıcıda oturum bilgisi, tercih gibi verileri tutar.Çalınabilir (XSS ile) CSRF saldırılarında kurbanın adına istek gönderilirken kullanılır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>5-Session (Oturum)</h3>
+            <p>Kullanıcının login olduğu bilgiyi sunucu tarafında tutar.Oturum yönetimi zayıfsa, session hijacking (oturum çalma) mümkündür. Güvenli oturum süresi ve oturum yenileme gerekir.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>6-Input Validation (Girdi Doğrulama)</h3>
+            <p>Kullanıcının girdiği verilerin kurallara uygun olup olmadığını kontrol eder. SQL injection, XSS, Command Injection gibi saldırıların önlenmesinde birincil savunma hattıdır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>7-Output Encoding (Çıktı Kodlaması)</h3>
+            <p>Veriler ekrana basılmadan önce özel karakterleri zararsız hale getirir.XSS saldırılarına karşı korunmada kullanılır. Girdi değil, çıktı tarafında uygulanmalıdır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>8-Authentication (Kimlik Doğrulama)</h3>
+            <p>Kullanıcının gerçekten kim olduğunu belirler.Kötü tasarlanmış login sistemleri → Insecure Login, Brute Force, Credential Stuffing saldırılarına açık hale gelir.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>9-Authorization (Yetkilendirme)</h3>
+            <p>Kimin, neye erişimi olduğunu belirler. "Bu kullanıcı bu işlemi yapabilir mi?" sorusunu cevaplar.Hatalı yetkilendirme → Broken Access Control, IDOR gibi açıklarla sonuçlanır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>10-CSRF Token (Cross-Site Request Forgery Token)</h3>
+            <p>Kullanıcıdan gelen isteğin gerçekten siteye ait olup olmadığını doğrular.CSRF saldırılarını engellemek için formlarda ve isteklerde CSRF token kullanılmalıdır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>11-Sanitization (Temizleme)</h3>
+            <p>Girdilerdeki tehlikeli karakterleri siler veya zararsız hale getirir. SQL injection, XSS gibi zafiyetlere karşı korunmada input validation ile birlikte çalışır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>12-Content Security Policy (CSP)</h3>
+            <p>Sayfanın sadece belirli kaynaklardan veri, script, stil almasını zorunlu kılar.XSS gibi saldırılara karşı ek bir güvenlik katmanıdır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>13-Security Headers (Güvenlik Başlıkları)</h3>
+            <p>HTTP yanıtlarıyla birlikte gelen güvenlik talimatlarıdır. Örnek: X-Content-Type-Options, X-Frame-Options, Strict-Transport-Security Tarayıcının davranışlarını kısıtlayarak saldırı yüzeyini azaltır.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>14-File MIME Type & Extension Kontrolü</h3>
+            <p>Kullanıcının yüklediği dosyanın gerçekten iddia ettiği türde olup olmadığını denetler. File Upload zafiyetlerinde saldırgan .php, .exe dosyası yükleyebilir.</p>
+        </div>
+
+        <div class="maincard">
+            <h3>15-Open Redirect Kontrolü</h3>
+            <p>Kullanıcının başka sitelere yönlendirilmesini kontrol eder.Kötü niyetli yönlendirmeler kimlik avına sebep olabilir.</p>
+        </div>
+                 <div class="maincard">
+             <h3>16-Rate Limiting / Throttling</h3>
+             <p>Brute Force ve DoS saldırılarına karşı koruma sağlar.</p>
+         </div>
+     </div>
+     
+     <a href="/test" class="test-button">TESTE BAŞLA</a>
+   
+       
+ </body>
+</html>

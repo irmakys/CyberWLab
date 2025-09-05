@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - Web Güvenliği</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <style>
+        .web-securty-container {
+         background-color: #1e0b0dbc;
+            border-radius: 20px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            padding: 60px 40px;
+            margin: 100px auto 60px auto;
+            max-width: 800px;
+            width: 90%;
+            transition: all 0.3s ease;
+         
+        }
+        .web-securty-container h1 {
+            font-size: 3.0em;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            color: #ab0909;
+            text-align: center;
+            margin: 0;
+        }
+     .web-securty-content{
+        max-width: 1100px;
+         margin: 60px auto;
+         padding: 36px 32px 32px 32px;
+         border-radius: 18px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         background-color: #1e0b0dbc;
+    }
+    .web-securty-content h2{
+        font-size: 2.5rem;
+        font-family: 'Inter', sans-serif;
+        font-style: italic;
+        font-weight: 500;
+        color: #890b0b;
+    }
+    .web-securty-content-text{
+        font-size: 1.2rem;
+        font-family: 'Inter', sans-serif;
+        font-style: italic;
+        font-weight: 90;
+        color: #beb8b8;
+        line-height: 1.5;
+    }
+    .web-securty-content h3{
+        font-size: 2.0rem;
+        font-family: 'Inter', sans-serif;
+        font-style: italic;
+        font-weight: 500;
+        color: #885151;
+    }
+                                                     .password-container{
+              max-width: 1100px;
+           margin: 60px auto;
+           padding: 36px 32px 32px 32px;
+           border-radius: 18px;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           background-color: #1e0b0dbc;
+           text-align: center;
+          }
+
+         .password-container h2{
+            font-size: 2.5rem;
+        font-family: 'Inter', sans-serif;
+        font-style: italic;
+        font-weight: 500;
+        color: #d50b0baa;
+        
+        }
+       
+             input {
+          width: 250px;
+          height: 28px;
+          padding: 3px 6px;
+          border-radius: 5px;
+          border: 1px solid #b4bec9;
+          font-size: 14px;
+          margin-bottom: 15px;
+          text-align: center;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+       }
+
+      .bottom {
+         margin: auto;
+         background: #1B2523;
+         color: #fff;
+         border: 3px solid #87393f;
+         border-radius: 10px;
+         padding: 12px 15px;
+         font-weight: bold;
+         text-decoration: none;
+         transition: all 0.3s ease;
+         box-shadow: 0 0 10px #8c453f, 0 0 20px #935c57 inset;
+         display: block;
+         justify-content: center;
+         align-items: center;
+         width: 70px;
+         margin-top: 15px;
+         margin-bottom: 10px;
+      }
+
+             .login-button {
+          margin: 20px auto;
+          background: #1B2523;
+          color: #fff;
+          border: 3px solid #D90D1E;
+          border-radius: 10px;
+          padding: 12px 25px;
+          font-weight: bolder;
+          box-shadow: 0 0 10px #A62C21, 0 0 20px #A62C21 inset;
+          display: block;
+          justify-content: center;
+          align-items: center;
+          width: 150px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+       }
+
+       .login-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 0 15px #A62C21, 0 0 25px #A62C21 inset;
+       }
+
+       #nextBtn {
+          margin: auto;
+          background: #1B2523;
+          color: #fff;
+          border: 3px solid #D90D1E;
+          border-radius: 10px;
+          padding: 12px 25px;
+          font-weight: bolder;
+          box-shadow: 0 0 10px #A62C21, 0 0 20px #A62C21 inset;
+          display: block;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          margin-top: 15px;
+          margin-bottom: 10px;
+
+       }      
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+    <div class="web-securty-container">
+        <h1>Web uygulamaları geliştirilirken karşılaşabileceğiniz zafiyetler</h1>
+    </div>
+
+    <div class="web-securty-content">
+        <h2>Insecure Login Zafiyeti</h2>
+        <div class="web-securty-content-text">Insecure Login, kullanıcı giriş sisteminin aşağıdaki hatalardan biri (veya birkaçı) nedeniyle kötü niyetli kullanıcılar tarafından sömürülebileceği anlamına gelir:
+            <br> <br><br>
+        
+            - HTTP üzerinden login yapılması (şifreler açıkta)
+         <br> <br>
+
+         - Güçlü parola zorunluluğu olmaması
+         <br> <br>
+         - Login rate-limiting olmaması (brute-force açık)
+         <br> <br>
+         - Giriş denemelerinde CAPTCHA olmaması
+         <br> <br>
+         - Yanıltıcı oturum token kullanımı veya saklanması
+        </div>
+        <h3>
+            Senaryo Başlığı
+        </h3>
+        <br> <br>
+        <div class="web-securty-content-text">Hedef Sisteme Yetkisiz Erişim – Insecure Login
+            Sömürüsü
+            <br>
+            <br>
+            Odak: Credential Access – Brute Force (T1110.001)
+            <br>Kullanıcıya Rol:<br>
+            "Sen bir güvenlik araştırmacısısın. Bir şirkete ait eski bir admin paneli buldun. Giriş ekranı seni karşılıyor
+            ama HTTPS aktif değil ve herhangi bir CAPTCHA koruması da yok."
+   
+            <br> Amaç:<br>"Admin hesabına yetkisiz erişim sağla ve sistemin neden güvensiz olduğunu analiz et."
+            <br> Sisteme erişebilmek için en fazla 5 defa deneme yapabilirsin. <br> ( Başarısız denemelerle zafiyeti
+            anladıktan sonra Kullanıcı Adı: guest Parola: guest denemesini yap) </div>
+    </div>
+<br> <br>
+<br> <br>   
+<div class="password-container"> 
+    <h2>Şifre Tahmin Paneli</h2>
+    <br> <br>
+    <input type="text" placeholder="Kullanıcı adı" id="userInput">
+    <input type="password" placeholder="Şifre" id="passInput">
+    <button onclick="tryLogin()" class="login-button">Denemeyi Gönder</button>
+    <div id="log"></div>
+    <button id="nextBtn" style="display:none;">Devam Et</button>
+</div>
+
+
+<button
+onclick="alert('Zafiyeti önlemek için:\n\n✅ HTTPS zorunlu\n✅ Güçlü şifre politikası\n✅ Brute-force koruma (rate-limit / CAPTCHA)\n✅ Giriş kontrolü backend tarafında yapılmalı')">🛡️
+Güvenlik Önerilerini Gör</button>
+
+<script>const creds = {
+   admin: "123456",
+   guest: "guest",
+   testuser: "password"
+};
+let tryCount = 0;
+
+function tryLogin() {
+   const user = document.getElementById("userInput").value;
+   const pass = document.getElementById("passInput").value;
+   tryCount++;
+
+   if (creds[user] === pass) {
+      document.getElementById("log").innerHTML =
+         `<p style="color:green;"> Başarılı Giriş: ${user}</p>
+  <p style="color:green"> Bu sistemde rate-limiting veya CAPTCHA koruması yok!</p>`;
+
+      document.getElementById("nextBtn").style.display = "inline-block";
+
+   } else {
+      document.getElementById("log").innerHTML =
+         `<p style="color:red;">Giriş başarısız - ${tryCount}. deneme</p>`;
+   }
+   if (tryCount > 5) {
+      alert("Sistem geçici olarak yanıt vermiyor. Çok fazla giriş denemesi yapıldı.DoS (Denial of Service) zafiyetine dönüştüEğer sistem:\n\n- Her giriş denemesinde veritabanında ağır sorgular çalıştırıyorsa\n - Logging veya email notification gibi işlemler başlatıyorsa\n - Rate-limiting / throttling yoksa\n\n o zaman birkaç yüz ila birkaç bin başarısız giriş denemesiyle:\n\n - Sistem cevap veremez hale gelebilir (örneğin RAM veya CPU tükenmesi).\n - Bu, brute-force saldırısını DoS saldırısına dönüştürür.");
+      return;
+   }
+
+}
+
+// Devam Et butonuna tıklanınca xssTest sayfasına yönlendir
+document.addEventListener('DOMContentLoaded', function () {
+   document.getElementById('nextBtn').onclick = function () {
+      window.location.href = '/xssTest';
+   };
+});
+</script>
+
+   
+</body>
+</html>

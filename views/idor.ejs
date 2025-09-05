@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - IDOR Testi</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .idor-container {
+            max-width: 1200px;
+            margin: 80px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .idor-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .idor-title {
+            font-size: 2.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .idor-description {
+            font-size: 1.3rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #DA7E7E;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: #6A1E27;
+            border: 1px solid #BA9E9E;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #DA7E7E;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+            color: #DA7E7E;
+        }
+
+        .idor-demo-container {
+            background-color: #1e0b0dbc;
+            border: 2px solid #BA9E9E;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .idor-input {
+            width: 100%;
+            max-width: 300px;
+            height: 40px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #BA9E9E;
+            font-size: 16px;
+            margin: 10px;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .idor-button {
+            background: #1B2523;
+            color: #fff;
+            border: 3px solid #D90D1E;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #A62C21, 0 0 20px #A62C21 inset;
+            margin: 10px;
+        }
+
+        .idor-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px #A62C21, 0 0 25px #A62C21 inset;
+        }
+
+        .idor-output {
+            background-color: #ffffff;
+            border: 2px solid #DA7E7E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 100px;
+            text-align: left;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .warning-box {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 2px solid #F44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #F44336;
+            font-weight: 600;
+        }
+
+        .success-box {
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .user-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .user-card {
+            background-color: #ffffff;
+            border: 2px solid #DA7E7E;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 200px;
+            text-align: center;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: #D90D1E;
+        }
+
+        .user-id {
+            font-weight: bold;
+            color: #D90D1E;
+            font-size: 1.2rem;
+        }
+
+        .user-name {
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .user-email {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .idor-title {
+                font-size: 2.2rem;
+            }
+
+            .idor-description {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-content {
+                font-size: 1rem;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+
+            .idor-demo-container {
+                padding: 25px;
+            }
+
+            .user-list {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .next-stage-button {
+                        display: block;
+                        margin: 40px auto;
+                        padding: 18px 45px;
+                        background: linear-gradient(135deg, #5E1A23 0%, #973d49 100%);
+                        color: #ffffff;
+                        text-decoration: none;
+                        border-radius: 15px;
+                        font-family: 'Inter', sans-serif;
+                        font-weight: 700;
+                        font-size: 1.3rem;
+                        text-align: center;
+                        transition: all 0.4s ease;
+                        box-shadow: 0 8px 25px rgba(94, 26, 35, 0.4), 0 0 20px rgba(94, 26, 35, 0.2);
+                        border: 3px solid #ffffff;
+                        width: 250px;
+                        position: relative;
+                        overflow: hidden;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                    }
+
+                    .next-stage-button::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                        transition: left 0.5s;
+                    }
+
+                    .next-stage-button:hover::before {
+                        left: 100%;
+                    }
+
+                    .next-stage-button:hover {
+                        transform: translateY(-5px) scale(1.05);
+                        box-shadow: 0 15px 35px rgba(94, 26, 35, 0.5), 0 0 30px rgba(94, 26, 35, 0.3);
+                        background: linear-gradient(135deg, #973d49 0%, #5E1A23 100%);
+                        border-color: #DA7E7E;
+                    }
+
+                    @media (max-width: 768px) {
+                        .xss-test-title {
+                            font-size: 2.2rem;
+                        }
+
+                        .xss-test-description {
+                            font-size: 1.1rem;
+                        }
+
+                        .section-title {
+                            font-size: 1.5rem;
+                        }
+
+                        .section-content {
+                            font-size: 1rem;
+                        }
+
+                        .content-section {
+                            padding: 25px;
+                        }
+
+                        .xss-demo-container {
+                            padding: 25px;
+                        }
+
+                        .next-stage-button {
+                            width: 200px;
+                            padding: 15px 35px;
+                            font-size: 1.1rem;
+                        }
+                    }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="idor-container">
+        <div class="idor-header">
+            <h1 class="idor-title">IDOR Testi</h1>
+            <p class="idor-description">
+                Insecure Direct Object Reference (IDOR) güvenlik açıklarını öğren ve test et. 
+                Yetkisiz veri erişim saldırılarını keşfet ve korunma yöntemlerini öğren.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">IDOR Nedir?</h2>
+            <div class="section-content">
+                <p>
+                    IDOR (Insecure Direct Object Reference), bir uygulamanın kullanıcıya 
+                    doğrudan bir nesneye (dosya, veri, kayıt) referans vermesi ve bu referansın 
+                    yetkilendirme kontrolü olmadan kullanılabilmesi durumunda ortaya çıkan güvenlik açığıdır.
+                </p>
+                <p>
+                    Saldırganlar, URL'deki ID değerlerini değiştirerek başka kullanıcıların 
+                    verilerine yetkisiz erişim sağlayabilir.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">IDOR Saldırı Türleri</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Horizontal IDOR:</strong> Aynı seviyedeki kullanıcıların verilerine erişim</li>
+                    <li><strong>Vertical IDOR:</strong> Daha yüksek yetkili kullanıcıların verilerine erişim</li>
+                    <li><strong>Path Traversal:</strong> Dosya yolu manipülasyonu ile yetkisiz dosya erişimi</li>
+                    <li><strong>Mass Assignment:</strong> Toplu veri atama ile yetkisiz alan erişimi</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="idor-demo-container">
+            <h2 class="section-title">IDOR Demo Paneli</h2>
+            <p class="section-content">
+                Aşağıdaki demo'da farklı kullanıcı ID'lerini test ederek IDOR açığını keşfedebilirsin. 
+                <strong>⚠️ Bu sadece eğitim amaçlıdır!</strong>
+            </p>
+            
+            <div style="margin: 20px 0;">
+                <input type="number" 
+                       class="idor-input" 
+                       id="userIdInput" 
+                       placeholder="Kullanıcı ID (1-10 arası)"
+                       min="1" 
+                       max="10">
+                <br>
+                <button class="idor-button" onclick="getUserData()">Kullanıcı Bilgilerini Getir</button>
+                <button class="idor-button" onclick="clearIdorOutput()">Temizle</button>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Güvenlik Uyarısı:</strong> Bu demo sadece eğitim amaçlıdır. 
+                Gerçek sistemlerde IDOR testleri yapmayın!
+            </div>
+            
+            <h3 style="color: #DA7E7E; margin-top: 30px;">Sonuç:</h3>
+            <div class="idor-output" id="idorOutput">
+                Kullanıcı ID'si girerek IDOR testini başlatın...
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Örnek Kullanıcı Verileri</h2>
+            <div class="section-content">
+                <p>
+                    Aşağıdaki kullanıcıların verilerine IDOR saldırısı ile erişmeyi deneyebilirsin:
+                </p>
+                <div class="user-list" id="userList">
+                    <!-- JavaScript ile dinamik olarak doldurulacak -->
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Korunma Yöntemleri</h2>
+            <div class="section-content">
+                <p>
+                    IDOR saldırılarına karşı korunmak için aşağıdaki yöntemleri uygulayın:
+                </p>
+                <ul>
+                    <li><strong>Access Control:</strong> Her istek için yetkilendirme kontrolü yapın</li>
+                    <li><strong>Indirect References:</strong> Doğrudan ID yerine hash veya token kullanın</li>
+                    <li><strong>Input Validation:</strong> Kullanıcı girdilerini doğrulayın</li>
+                    <li><strong>Least Privilege:</strong> Minimum yetki prensibi uygulayın</li>
+                    <li><strong>Regular Testing:</strong> Düzenli güvenlik testleri yapın</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Test Senaryoları</h2>
+            <div class="section-content">
+                <p>
+                    IDOR testlerinde deneyebileceğiniz senaryolar:
+                </p>
+                <ul>
+                    <li>Kullanıcı ID'sini 1'den 10'a kadar değiştirin</li>
+                    <li>Negatif ID değerleri deneyin (örn: -1, -999)</li>
+                    <li>Çok büyük ID değerleri deneyin (örn: 999999)</li>
+                    <li>String ID değerleri deneyin (örn: "admin", "test")</li>
+                    <li>SQL injection payload'ları deneyin</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Devam Et Butonu -->
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="/brute" class="next-stage-button" > Brute Force Testine Geç
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Örnek kullanıcı verileri
+        const users = {
+            1: { name: "Irmak Bakırhan", email: "yirmak@example.com", role: "Kullanıcı" },
+            2: { name: "Burak Koç", email: "demir@example.com", role: "Kullanıcı" },
+            3: { name: "Mehmet Kaya", email: "mehmet@example.com", role: "Kullanıcı" },
+            4: { name: "Hanzade Bakırhan", email: "hanzade@example.com", role: "Kullanıcı" },
+            5: { name: "Mislina Taştan", email: "mislina@example.com", role: "Kullanıcı" },
+            6: { name: "Sıraç Çelik", email: "celik@example.com", role: "Kullanıcı" },
+            7: { name: "Fatma Turan", email: "fatma@example.com", role: "Kullanıcı" },
+            8: { name: "Yılmaz Bakırcı", email: "yilmaz@example.com", role: "Kullanıcı" },
+            9: { name: "Tan Demirbilek", email: "burak@example.com", role: "Kullanıcı" },
+            10: { name: "Admin User", email: "admin@example.com", role: "Admin" }
+        };
+
+        // Sayfa yüklendiğinde kullanıcı listesini göster
+        document.addEventListener('DOMContentLoaded', function() {
+            displayUserList();
+        });
+
+        function displayUserList() {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+            
+            for (let id in users) {
+                const user = users[id];
+                const userCard = document.createElement('div');
+                userCard.className = 'user-card';
+                userCard.innerHTML = `
+                    <div class="user-id">ID: ${id}</div>
+                    <div class="user-name">${user.name}</div>
+                    <div class="user-email">${user.email}</div>
+                    <div style="color: #D90D1E; font-weight: bold; margin-top: 5px;">${user.role}</div>
+                `;
+                userList.appendChild(userCard);
+            }
+        }
+
+        function getUserData() {
+            const userId = document.getElementById('userIdInput').value;
+            const output = document.getElementById('idorOutput');
+            
+            if (!userId) {
+                output.innerHTML = '<p style="color: #F44336;">Lütfen bir kullanıcı ID\'si girin!</p>';
+                return;
+            }
+            
+            const userIdNum = parseInt(userId);
+            
+            if (userIdNum < 1 || userIdNum > 10) {
+                output.innerHTML = `
+                    <div class="warning-box">
+                        <strong>⚠️ Geçersiz ID:</strong> Lütfen 1-10 arasında bir ID girin!
+                    </div>
+                `;
+                return;
+            }
+            
+            const user = users[userIdNum];
+            
+            if (user) {
+                // IDOR açığı simülasyonu
+                if (userIdNum === 10) {
+                    output.innerHTML = `
+                        <div class="success-box">
+                            <strong>✅ Başarılı Erişim:</strong> Admin kullanıcısına erişim sağlandı!
+                        </div>
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h4>Kullanıcı Bilgileri:</h4>
+                            <p><strong>ID:</strong> ${userIdNum}</p>
+                            <p><strong>Ad:</strong> ${user.name}</p>
+                            <p><strong>Email:</strong> ${user.email}</p>
+                            <p><strong>Rol:</strong> ${user.role}</p>
+                        </div>
+                        <div class="warning-box" style="margin-top: 15px;">
+                            <strong>🚨 IDOR Açığı Tespit Edildi!</strong><br>
+                            Normal bir kullanıcı admin verilerine erişebildi. Bu gerçek bir sistemde ciddi bir güvenlik açığıdır!
+                        </div>
+                    `;
+                } else {
+                    output.innerHTML = `
+                        <div class="success-box">
+                            <strong>✅ Kullanıcı Bulundu:</strong> IDOR testi başarılı!
+                        </div>
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h4>Kullanıcı Bilgileri:</h4>
+                            <p><strong>ID:</strong> ${userIdNum}</p>
+                            <p><strong>Ad:</strong> ${user.name}</p>
+                            <p><strong>Email:</strong> ${user.email}</p>
+                            <p><strong>Rol:</strong> ${user.role}</p>
+                        </div>
+                        <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px; margin-top: 15px; color: #856404;">
+                            <strong>💡 IDOR Açığı:</strong> Bu kullanıcının verilerine yetkisiz erişim sağlandı. 
+                            Gerçek sistemlerde bu tür erişimler yetkilendirme kontrolü ile engellenmelidir.
+                        </div>
+                    `;
+                }
+            } else {
+                output.innerHTML = `
+                    <div class="warning-box">
+                        <strong>❌ Kullanıcı Bulunamadı:</strong> ID ${userIdNum} için kullanıcı bulunamadı!
+                    </div>
+                `;
+            }
+        }
+
+        function clearIdorOutput() {
+            document.getElementById('idorOutput').innerHTML = 'Kullanıcı ID\'si girerek IDOR testini başlatın...';
+            document.getElementById('userIdInput').value = '';
+        }
+    </script>
+</body>
+</html>

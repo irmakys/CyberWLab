@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - File Upload Testi</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .upload-container {
+            max-width: 1200px;
+            margin: 80px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .upload-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .upload-title {
+            font-size: 2.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .upload-description {
+            font-size: 1.3rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #DA7E7E;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: #6A1E27;
+            border: 1px solid #BA9E9E;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: #DA7E7E;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #DA7E7E;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+            color: #DA7E7E;
+        }
+
+        .upload-panel {
+            background: linear-gradient(135deg, #2c1810 0%, #3d2317 50%, #4a2c1a 100%);
+            border: 3px solid #ff8c42;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 700px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 140, 66, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 140, 66, 0.1), transparent);
+            animation: upload-scan 4s linear infinite;
+        }
+
+        @keyframes upload-scan {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .upload-title-panel {
+            font-size: 2rem;
+            color: #ff8c42;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 140, 66, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-form {
+            position: relative;
+            z-index: 1;
+        }
+
+        .file-upload-area {
+            border: 3px dashed #ff8c42;
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            background-color: rgba(255, 140, 66, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: #ffffff;
+            background-color: rgba(255, 140, 66, 0.1);
+            transform: scale(1.02);
+        }
+
+        .file-upload-area.dragover {
+            border-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #ff8c42;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            color: #DA7E7E;
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-button {
+            background: linear-gradient(45deg, #ff8c42, #ff6b35);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 140, 66, 0.4);
+            margin: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .upload-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.6);
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+        }
+
+        .upload-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .file-list {
+            background-color: #000000;
+            border: 2px solid #ff8c42;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .file-entry {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-entry.success {
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .file-entry.danger {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 1px solid #F44336;
+            color: #F44336;
+        }
+
+        .file-entry.warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            border: 1px solid #FFC107;
+            color: #FFC107;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-icon {
+            font-size: 1.2rem;
+        }
+
+        .file-status {
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .status-uploaded {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .status-blocked {
+            background-color: #F44336;
+            color: white;
+        }
+
+        .status-warning {
+            background-color: #FFC107;
+            color: black;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background-color: rgba(255, 140, 66, 0.1);
+            border: 1px solid #ff8c42;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            min-width: 120px;
+            margin: 5px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff8c42;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #ffffff;
+            margin-top: 5px;
+        }
+
+        .warning-box {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 2px solid #F44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #F44336;
+            font-weight: 600;
+        }
+
+        .success-box {
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .file-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .file-type-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid #ff8c42;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-type-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 140, 66, 0.3);
+            border-color: #ffffff;
+        }
+
+        .file-type-card.safe {
+            border-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .file-type-card.dangerous {
+            border-color: #F44336;
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+
+        .file-type-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .file-type-name {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .file-type-desc {
+            font-size: 0.8rem;
+            color: #DA7E7E;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid #ff8c42;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff8c42, #ff6b35);
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progress-shine 2s infinite;
+        }
+
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @media (max-width: 768px) {
+            .upload-title {
+                font-size: 2.2rem;
+            }
+
+            .upload-description {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-content {
+                font-size: 1rem;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+
+            .upload-panel {
+                padding: 25px;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .file-types-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="bigpunt">CYBERWLAB</div>
+        <div class="navbar-links">
+            <a href="/">Anasayfa</a>
+            <a href="/userpage">Profilim</a>
+            <a href="/roadmap">Yol Haritası</a>
+            <a href="/moduller">Modüller</a>
+            <a href="/kaynaklar">Kaynaklar</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="upload-container">
+        <div class="upload-header">
+            <h1 class="upload-title">File Upload Testi</h1>
+            <p class="upload-description">
+                Siber Güvenlik Laboratuvarı'nın dosya yükleme sistemini test et. 
+                Farklı dosya türleri yükleyerek güvenlik açıklarını keşfet!
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🎯 Senaryo: Dosya Yükleme Sistemi</h2>
+            <div class="section-content">
+                <p>
+                    Siber Güvenlik Laboratuvarı'nın dosya yükleme sistemini test ediyorsun. 
+                    Bu sistem öğrencilerin ödevlerini ve projelerini yüklemesine olanak sağlıyor.
+                </p>
+                <p>
+                    Görevin: Farklı dosya türleri yükleyerek sistemin güvenlik kontrollerini test etmek. 
+                    Hangi dosya türlerinin kabul edildiğini, hangilerinin engellendiğini keşfet!
+                </p>
+            </div>
+        </div>
+
+        <!-- Dosya Yükleme Paneli -->
+        <div class="upload-panel">
+            <h2 class="upload-title-panel">📁 Dosya Yükleme Sistemi</h2>
+            <div class="upload-form">
+                <div class="file-upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📤</div>
+                    <div class="upload-text">Dosya Seç veya Sürükle</div>
+                    <div class="upload-subtext">Desteklenen formatlar: .txt, .pdf, .jpg, .png, .docx, .php, .html</div>
+                </div>
+                
+                <input type="file" id="fileInput" class="file-input" multiple>
+                
+                <button class="upload-button" onclick="uploadFiles()" id="uploadBtn">
+                    🚀 Dosyaları Yükle
+                </button>
+                <button class="upload-button" onclick="clearFiles()" id="clearBtn">
+                    🗑️ Temizle
+                </button>
+            </div>
+
+            <!-- İstatistikler -->
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalFiles">0</div>
+                    <div class="stat-label">Toplam Dosya</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="uploadedFiles">0</div>
+                    <div class="stat-label">Yüklenen</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="blockedFiles">0</div>
+                    <div class="stat-label">Engellenen</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="warningFiles">0</div>
+                    <div class="stat-label">Uyarı</div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <!-- Dosya Listesi -->
+            <h3 style="color: #ff8c42; margin-top: 20px;">📋 Yükleme Sonuçları:</h3>
+            <div class="file-list" id="fileList">
+                <div style="color: #ffff00;">[INFO] Dosya yükleme sistemi hazır...</div>
+                <div style="color: #ffff00;">[INFO] Dosya seçmek için yukarıdaki alana tıklayın</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔍 Test Edilecek Dosya Türleri</h2>
+            <div class="section-content">
+                <p>
+                    Aşağıdaki dosya türlerini test ederek sistemin güvenlik kontrollerini keşfedebilirsin:
+                </p>
+                <div class="file-types-grid">
+                    <div class="file-type-card safe" onclick="createTestFile('safe', 'test.txt', 'text/plain')">
+                        <div class="file-type-icon">📄</div>
+                        <div class="file-type-name">TXT Dosyası</div>
+                        <div class="file-type-desc">Güvenli metin dosyası</div>
+                    </div>
+                    <div class="file-type-card safe" onclick="createTestFile('safe', 'document.pdf', 'application/pdf')">
+                        <div class="file-type-icon">📕</div>
+                        <div class="file-type-name">PDF Dosyası</div>
+                        <div class="file-type-desc">Güvenli PDF belgesi</div>
+                    </div>
+                    <div class="file-type-card safe" onclick="createTestFile('safe', 'image.jpg', 'image/jpeg')">
+                        <div class="file-type-icon">🖼️</div>
+                        <div class="file-type-name">JPG Dosyası</div>
+                        <div class="file-type-desc">Güvenli resim dosyası</div>
+                    </div>
+                    <div class="file-type-card dangerous" onclick="createTestFile('dangerous', 'shell.php', 'application/x-php')">
+                        <div class="file-type-icon">⚡</div>
+                        <div class="file-type-name">PHP Dosyası</div>
+                        <div class="file-type-desc">Tehlikeli script dosyası</div>
+                    </div>
+                    <div class="file-type-card dangerous" onclick="createTestFile('dangerous', 'malware.exe', 'application/x-executable')">
+                        <div class="file-type-icon">💀</div>
+                        <div class="file-type-name">EXE Dosyası</div>
+                        <div class="file-type-desc">Tehlikeli executable</div>
+                    </div>
+                    <div class="file-type-card dangerous" onclick="createTestFile('dangerous', 'script.html', 'text/html')">
+                        <div class="file-type-icon">🌐</div>
+                        <div class="file-type-name">HTML Dosyası</div>
+                        <div class="file-type-desc">Potansiyel XSS riski</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🛡️ File Upload Korunma Yöntemleri</h2>
+            <div class="section-content">
+                <p>
+                    File upload saldırılarına karşı korunmak için:
+                </p>
+                <ul>
+                    <li><strong>File Type Validation:</strong> Dosya türü kontrolü (MIME type, extension)</li>
+                    <li><strong>File Size Limits:</strong> Dosya boyutu sınırlamaları</li>
+                    <li><strong>Virus Scanning:</strong> Antivirüs taraması</li>
+                    <li><strong>Content Analysis:</strong> Dosya içeriği analizi</li>
+                    <li><strong>Secure Storage:</strong> Güvenli dosya depolama</li>
+                    <li><strong>Access Control:</strong> Dosya erişim kontrolü</li>
+                    <li><strong>File Renaming:</strong> Dosya adı değiştirme</li>
+                    <li><strong>Sandboxing:</strong> İzole çalıştırma ortamı</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">⚠️ Güvenlik Uyarısı</h2>
+            <div class="warning-box">
+                <strong>🚨 ÖNEMLİ:</strong> Bu platform yalnızca eğitim amaçlıdır. Burada öğrenilen yöntemlerin başka sistemlerde kullanılması hukuka aykırıdır ve cezai sorumluluk doğurur. Platform üzerinde yapılan tüm işlemler eğitim ortamıyla sınırlıdır.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFiles = [];
+        let totalFiles = 0;
+        let uploadedFiles = 0;
+        let blockedFiles = 0;
+        let warningFiles = 0;
+
+        // Dosya türü kontrolleri
+        const allowedTypes = ['text/plain', 'application/pdf', 'image/jpeg', 'image/png', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        const dangerousTypes = ['application/x-php', 'application/x-executable', 'text/html', 'application/x-javascript'];
+        const warningTypes = ['application/zip', 'application/x-rar', 'application/x-7z-compressed'];
+
+        // Sayfa yüklendiğinde event listener'ları ekle
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag & Drop event listeners
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+        });
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            addFiles(files);
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(event) {
+            event.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('dragover');
+            const files = Array.from(event.dataTransfer.files);
+            addFiles(files);
+        }
+
+        function addFiles(files) {
+            selectedFiles = [...selectedFiles, ...files];
+            totalFiles = selectedFiles.length;
+            updateStats();
+            displayFileList();
+        }
+
+        function createTestFile(type, filename, mimeType) {
+            let content = '';
+            let blob;
+            
+            switch(type) {
+                case 'safe':
+                    if (filename.endsWith('.txt')) {
+                        content = 'Bu güvenli bir metin dosyasıdır.';
+                    } else if (filename.endsWith('.pdf')) {
+                        content = '%PDF-1.4\nBu bir test PDF dosyasıdır.';
+                    } else if (filename.endsWith('.jpg')) {
+                        content = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A';
+                    }
+                    break;
+                case 'dangerous':
+                    if (filename.endsWith('.php')) {
+                        content = '<?php\nsystem($_GET["cmd"]);\n?>';
+                    } else if (filename.endsWith('.exe')) {
+                        content = 'MZ\x90\x00\x03\x00\x00\x00\x04\x00\x00\x00\xff\xff\x00\x00';
+                    } else if (filename.endsWith('.html')) {
+                        content = `<script>alert("XSS Test")</script>`;
+                    }
+                    break;
+            }
+            
+            if (filename.endsWith('.jpg')) {
+                // Base64 encoded image data
+                blob = new Blob([content], { type: mimeType });
+            } else {
+                blob = new Blob([content], { type: mimeType });
+            }
+            
+            const file = new File([blob], filename, { type: mimeType });
+            addFiles([file]);
+        }
+
+        function uploadFiles() {
+            if (selectedFiles.length === 0) {
+                addLogEntry('[WARNING] Yüklenecek dosya seçilmedi!', 'warning');
+                return;
+            }
+
+            addLogEntry('[INFO] Dosya yükleme işlemi başlatıldı...', 'info');
+            
+            let processedFiles = 0;
+            const totalFilesToProcess = selectedFiles.length;
+            
+            selectedFiles.forEach((file, index) => {
+                setTimeout(() => {
+                    processFile(file);
+                    processedFiles++;
+                    
+                    const progress = (processedFiles / totalFilesToProcess) * 100;
+                    document.getElementById('progressFill').style.width = progress + '%';
+                    
+                    if (processedFiles === totalFilesToProcess) {
+                        addLogEntry('[INFO] Tüm dosyalar işlendi!', 'info');
+                        updateStats();
+                    }
+                }, index * 500); // Her dosya arasında 500ms bekle
+            });
+        }
+
+        function processFile(file) {
+            const fileType = file.type;
+            const fileName = file.name;
+            const fileSize = file.size;
+            
+            let status = '';
+            let logMessage = '';
+            let logType = '';
+            
+            // Dosya türü kontrolü
+            if (allowedTypes.includes(fileType)) {
+                status = 'success';
+                logMessage = `[SUCCESS] ${fileName} - Güvenli dosya türü, yükleme başarılı`;
+                logType = 'success';
+                uploadedFiles++;
+            } else if (dangerousTypes.includes(fileType)) {
+                status = 'danger';
+                logMessage = `[BLOCKED] ${fileName} - Tehlikeli dosya türü, yükleme engellendi!`;
+                logType = 'danger';
+                blockedFiles++;
+            } else if (warningTypes.includes(fileType)) {
+                status = 'warning';
+                logMessage = `[WARNING] ${fileName} - Şüpheli dosya türü, dikkatli olun`;
+                logType = 'warning';
+                warningFiles++;
+            } else {
+                status = 'danger';
+                logMessage = `[BLOCKED] ${fileName} - Desteklenmeyen dosya türü`;
+                logType = 'danger';
+                blockedFiles++;
+            }
+            
+            // Dosya boyutu kontrolü
+            if (fileSize > 10 * 1024 * 1024) { // 10MB
+                status = 'danger';
+                logMessage = `[BLOCKED] ${fileName} - Dosya boyutu çok büyük (${(fileSize / 1024 / 1024).toFixed(2)}MB)`;
+                logType = 'danger';
+                if (status === 'success') {
+                    uploadedFiles--;
+                    blockedFiles++;
+                }
+            }
+            
+            addLogEntry(logMessage, logType);
+            addFileEntry(file, status);
+        }
+
+        function addLogEntry(message, type) {
+            const fileList = document.getElementById('fileList');
+            const logEntry = document.createElement('div');
+            logEntry.style.color = type === 'success' ? '#4CAF50' : 
+                                  type === 'danger' ? '#F44336' : 
+                                  type === 'warning' ? '#FFC107' : '#ffff00';
+            logEntry.textContent = message;
+            fileList.appendChild(logEntry);
+            fileList.scrollTop = fileList.scrollHeight;
+        }
+
+        function addFileEntry(file, status) {
+            const fileList = document.getElementById('fileList');
+            const fileEntry = document.createElement('div');
+            fileEntry.className = `file-entry ${status}`;
+            
+            const fileIcon = getFileIcon(file.name);
+            const statusText = status === 'success' ? 'YÜKLENDİ' : 
+                              status === 'danger' ? 'ENGELLENDİ' : 'UYARI';
+            
+            fileEntry.innerHTML = `
+                <div class="file-info">
+                    <span class="file-icon">${fileIcon}</span>
+                    <span>${file.name}</span>
+                    <span style="color: #DA7E7E;">(${(file.size / 1024).toFixed(1)} KB)</span>
+                </div>
+                <div class="file-status status-${status}">${statusText}</div>
+            `;
+            
+            fileList.appendChild(fileEntry);
+        }
+
+        function getFileIcon(fileName) {
+            const extension = fileName.split('.').pop().toLowerCase();
+            const iconMap = {
+                'txt': '📄',
+                'pdf': '📕',
+                'jpg': '🖼️',
+                'jpeg': '🖼️',
+                'png': '🖼️',
+                'docx': '📝',
+                'php': '⚡',
+                'html': '🌐',
+                'exe': '💀',
+                'zip': '📦',
+                'rar': '📦'
+            };
+            return iconMap[extension] || '📁';
+        }
+
+        function displayFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            if (selectedFiles.length === 0) {
+                addLogEntry('[INFO] Dosya yükleme sistemi hazır...', 'info');
+                addLogEntry('[INFO] Dosya seçmek için yukarıdaki alana tıklayın', 'info');
+                return;
+            }
+            
+            addLogEntry(`[INFO] ${selectedFiles.length} dosya seçildi`, 'info');
+            selectedFiles.forEach(file => {
+                addLogEntry(`[INFO] ${file.name} - ${(file.size / 1024).toFixed(1)} KB`, 'info');
+            });
+        }
+    
+
+        function clearFiles() {
+            selectedFiles = [];
+            totalFiles = 0;
+            uploadedFiles = 0;
+            blockedFiles = 0;
+            warningFiles = 0;
+            
+            document.getElementById('fileInput').value = '';
+            document.getElementById('progressFill').style.width = '0%';
+            
+            updateStats();
+            displayFileList();
+        }
+
+        function updateStats() {
+            document.getElementById('totalFiles').textContent = totalFiles;
+            document.getElementById('uploadedFiles').textContent = uploadedFiles;
+            document.getElementById('blockedFiles').textContent = blockedFiles;
+            document.getElementById('warningFiles').textContent = warningFiles;
+        }
+    }
+    </script>
+</body>
+</html>

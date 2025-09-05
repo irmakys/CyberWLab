@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberWlab - Profilim</title>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    
+    <div class="userpage-content">
+        <div class="profile-container">
+            <!-- Sol Kart - Kullanıcı Profil Bilgileri -->
+            <div class="profile-card">
+                <div class="profile-picture">
+                    <img src="https://via.placeholder.com/150x150/90EE90/FFFFFF?text=🐸" alt="Profil Resmi" />
+                </div>
+                <h2 class="welcome-text">Hoş geldin, <%= username %></h2>
+                <div class="user-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Kullanıcı Adı:</span>
+                        <span class="detail-value"><%= username %></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">E-posta:</span>
+                        <span class="detail-value"><%= email %></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Kayıt Tarihi:</span>
+                        <span class="detail-value"><%= registrationDate %></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sağ Kart - Başarı Çizelgesi -->
+            <div class="achievement-card">
+                <h3 class="achievement-title">Başarı Çizelgesi</h3>
+                <div class="achievement-content">
+                    <p class="placeholder-text">Başarılarınız burada görünecek</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

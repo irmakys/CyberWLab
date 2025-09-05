@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <style>
+        .roadmap-wrapper {
+            min-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 40px 20px 20px;
+        }
+
+        .roadmap-content {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(95, 49, 49, 0.6);
+            border-radius: 12px;
+            padding: 24px;
+            border: 2px solid #5B2B2C;
+            min-height: 100px;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(28px);
+            background-clip: padding-box;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .roadmap-content p {
+            font-size: 1.2rem;
+            font-family: "Inter", sans-serif;
+            font-style: italic;
+            line-height: 1.8;
+            color: #FFFFFF;
+        }
+
+        .start-button {
+            border-radius: 20px;
+            padding: 10px 27px;
+            color: white;
+            font-size: 1.4rem;
+            font-family: "Inter", sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(#582121, #672D2D); /* fill */
+            border: 4px solid transparent;
+            background-clip: padding-box, border-box;
+            background-origin: padding-box, border-box;
+            box-shadow: 0 0 0 4px linear-gradient(90deg, #563333, #BC7070); /* stroke efekti için alternatif */
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    <div style="display:flex; justify-content:flex-end; padding:12px 20px 0;">
+        <a href="/road" class="start-button">BAŞLA</a>
+    </div>
+        <div class="roadmap-wrapper">
+            <div class="roadmap-content">
+                <p>
+                    Siber güvenlik, dijital dünyada bilgilerin, sistemlerin ve ağların kötü niyetli saldırılara karşı
+                    korunmasıdır.
+                    <br> Günümüzde bireyler, kurumlar ve devletler için siber tehditler ciddi bir risk
+                    oluşturmaktadır.
+                    <br>Bu nedenle siber güvenlik, sadece teknik bilgi değil aynı zamanda farkındalık, dikkat ve
+                    analiz yeteneği de gerektirir.
+                </p>
+            </div>
+            <br> <br>
+
+            <div class="roadmap-content">
+                <p>
+                    Temel olarak siber güvenlik; gizlilik (confidentiality), bütünlük (integrity) ve erişilebilirlik (availability) ilkelerine dayanır.
+                    <br> Bunlara "CIA üçlemesi" denir. Gizlilik, verilerin yetkisiz kişilere karşı korunması anlamına ,gelir.
+                    <br> Bütünlük, verinin doğruluğunu ve tutarlılığını garanti eder. 
+                    <br>Erişilebilirlik ise bilgilere ihtiyaç duyulduğunda kesintisiz ulaşılabilmesini sağlar.
+                </p>
+            </div>
+
+            <br> <br>
+            <div class="roadmap-content">
+                <p>
+                    Siber güvenlikte temel koruma yöntemleri arasında güçlü şifre kullanımı, yazılım güncellemelerinin düzenliyapılması, 
+                    <br>güvenli bağlantıların tercih edilmesi (HTTPS), ağ trafiğinin izlenmesi ve güvenlik duvarlarının doğru yapılandırılması yer alır.
+                    <br> Aynı zamanda kullanıcı eğitimi, sosyal mühendislik saldırılarına karşı alınacak en etkili önlemlerden biridir
+                </p>
+        </div>
+        <br> <br>
+        <div class="roadmap-content">
+
+            <p> CyberWebLab platformu, bu temel kavramları öğrenmek isteyen kullanıcılar için interaktif modüller, senaryolar ve uygulamalar sunar. 
+                <br>Yol haritasını takip ederek XSS, CSRF ve SQL Injection gibi saldırı türlerin uygulamalı olarak deneyimleyebilir, 
+                <br>alınması gereken önlemleri öğrenebilir ve kendi sistemlerinizi nasıl koruyacağınızı adım adım keşfedebilirsiniz.
+                <br> Bu süreçte teorik bilgileri pratiğe dökerek, güvenlik farkındalığınızı artıracak ve gerçek dünyaya daha donanımlı bir şekilde adım atmış olacaksınız. </p>
+        </div>
+
+</body>
+
+</html>
